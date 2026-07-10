@@ -1,3 +1,8 @@
+> [!IMPORTANT]
+> **Development has moved to [dcaler/haarpi](https://github.com/dcaler/haarpi).**
+> This repo is archived; its full history continues there under
+> [`packages/raconteur/`](https://github.com/dcaler/haarpi/tree/main/packages/raconteur).
+
 # Raconteur
 
 An **offline-first paper writing assistant**. You describe your research; it
