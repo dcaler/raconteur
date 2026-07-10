@@ -16,8 +16,9 @@ _MAX_BIB_CHARS = 4000
 DEFAULT_LITREV_DIR = "litReview"   # rabbitHole
 DEFAULT_RESULTS_DIR = "results"    # rayleigh
 # raster writes a purpose-built methods writeup at the project root:
-#   <date>_methods_<initials_chain>.md
-_METHODS_RE = re.compile(r"^(\d{6})_methods((?:_[A-Za-z]+)+)\.md$")
+#   <date>_<project>_methods_<initials_chain>.md
+# The project segment is optional: raster omits it on single-project roots.
+_METHODS_RE = re.compile(r"^(\d{6})_(?:.+_)?methods((?:_[A-Za-z]+)+)\.md$")
 
 
 def _litrev_complete(d: Path) -> bool:
@@ -28,7 +29,8 @@ def _litrev_complete(d: Path) -> bool:
 def find_methods_file(project_dir: Path) -> Path | None:
     """Latest raster methods writeup at the project root.
 
-    Matches ``<date>_methods_<chain>.md`` (chained like paper files). Picks the
+    Matches ``<date>_<project>_methods_<chain>.md`` (chained like paper files),
+    with the project segment optional. Picks the
     highest datestamp, breaking ties by most-recent mtime, so the newest state
     of the writeup wins regardless of who last touched the chain.
     """
@@ -102,7 +104,7 @@ def load_litreview(project_dir: Path, subdir: str = "litReview") -> str:
 
 
 def load_methods(project_dir: Path) -> str:
-    """Read raster's methods writeup (<date>_methods_<chain>.md at project root)."""
+    """Read raster's methods writeup (<date>_<project>_methods_<chain>.md at project root)."""
     path = find_methods_file(project_dir)
     if path is None:
         return ""
